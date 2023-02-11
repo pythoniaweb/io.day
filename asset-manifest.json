@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/DennisKidman/0xDom/static/css/main.de99b274.css",
+    "main.js": "/DennisKidman/0xDom/static/js/main.29f4f856.js",
+    "static/js/787.28cb0dcd.chunk.js": "/DennisKidman/0xDom/static/js/787.28cb0dcd.chunk.js",
+    "static/media/logo.svg": "/DennisKidman/0xDom/static/media/logo.67330747ff66b6b1651f52edeee381cc.svg",
+    "index.html": "/DennisKidman/0xDom/index.html",
+    "main.de99b274.css.map": "/DennisKidman/0xDom/static/css/main.de99b274.css.map",
+    "main.29f4f856.js.map": "/DennisKidman/0xDom/static/js/main.29f4f856.js.map",
+    "787.28cb0dcd.chunk.js.map": "/DennisKidman/0xDom/static/js/787.28cb0dcd.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.de99b274.css",
+    "static/js/main.29f4f856.js"
+  ]
+}
