@@ -52,7 +52,7 @@ CNAME records:
     proxy: true
   - name: 288
     value: 288.us.to
-    proxy: false
+    proxy: true
 
 # NS records are used to specify the authoritative name servers for the zone.
 # If you are unsure what NS records do, we recommend using CNAME records instead.
