@@ -50,6 +50,9 @@ CNAME records:
   - name: darkvibesrecords
     value: 4bf630a3-445a-4ce1-8935-e1e2b2a86a91.id.repl.co
     proxy: true
+  - name: 288
+    value: 288.us.to
+    proxy: false
 
 # NS records are used to specify the authoritative name servers for the zone.
 # If you are unsure what NS records do, we recommend using CNAME records instead.
