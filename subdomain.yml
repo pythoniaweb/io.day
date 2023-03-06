@@ -14,6 +14,12 @@
 # We recommend you to use CNAME records.
 # Please add custom domain in this zone.
 CNAME records:
+  - name: ns
+    value: ns.io.day
+    proxy: true
+ - name: nc
+    value: nc.io.day
+    proxy: true
   - name: test
     value: test.com
     proxy: true
@@ -55,6 +61,42 @@ CNAME records:
 # If you are unsure what NS records do, we recommend using CNAME records instead.
 # Please add your custom domain in this zone.
 NS records:
+  - name: ns
+    value: ns1.zilore.net
+    ttl: "14400"
+  - name: ns
+    value: ns2.zilore.net
+    ttl: "14400"
+  - name: ns
+    value: ns1.huaweicloud-dns.org
+    ttl: "14400"
+  - name: ns
+    value: ns1.huaweicloud-dns.net
+    ttl: "14400"
+  - name: ns
+    value: ns1.huaweicloud-dns.cn
+    ttl: "14400"
+  - name: ns
+    value: ns1.huaweicloud-dns.com
+    ttl: "14400"
+  - name: nc
+    value: ns1.zilore.net
+    ttl: "14400"
+  - name: nc
+    value: ns2.zilore.net
+    ttl: "14400"
+  - name: nc
+    value: ns1.huaweicloud-dns.org
+    ttl: "14400"
+  - name: nc
+    value: ns1.huaweicloud-dns.net
+    ttl: "14400"
+  - name: nc
+    value: ns1.huaweicloud-dns.cn
+    ttl: "14400"
+ - name: nc
+    value: ns1.huaweicloud-dns.com
+    ttl: "14400"
   - name: test
     value: ns1.test.org
     ttl: "14400"
