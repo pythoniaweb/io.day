@@ -1,106 +1,114 @@
-# Welcome to DNS records of IO.DAY
+import CloudFlare
+import yaml
 
-# IO.DAY uses Cloudflare for DNS protection, which is enabled by default.
-# This means that SSL is supported and all traffic will be routed through Cloudflare's network.
-# Disabling the proxy (DNS only) will require providing your own SSL certificate and disable Cloudflare protection.
+# Load API Key from ky.yml
+with open('misc\ky.yml') as file:
+    api_data = yaml.safe_load(file)
+    api_key = api_data['api_key']
+    zone_id = api_data['zone_id']
 
-# Access via HTTPS links (https://radio.io.day)
-# KEY: The subdomain name (e.g. radio for radio.io.day)
-# VALUE: The URL the subdomain points to (e.g. denniskidman.github.io)
-# We recommend using CNAME records for subdomains.
-# Please add your custom domain in this zone.
+# Load CNAME DB Yaml file
+with open('misc\cnamedb.yml') as file:
+    cname_db_data = yaml.safe_load(file)
 
-# The list below is subdomain currently used.
-# We recommend you to use CNAME records.
-# Please add custom domain in this zone.
-CNAME records:
-  - name: test
-    value: test.com
-    proxy: true
-  - name: radio
-    value: denniskidman.github.io
-    proxy: false
-  - name: cari-kata
-    value: cname.vercel-dns.com
-    proxy: false
-  - name: gravity
-    value: usegravitytool.vercel.app
-    proxy: false
-  - name: waydeclick
-    value: edalves-uachavila.github.io
-    proxy: true
-  - name: toybox
-    value: charliebunt.github.io
-    proxy: false
-  - name: chino
-    value: chino.pages.dev
-    proxy: false
-  - name: stevemoretz
-    value: stevemoretz.github.io
-    proxy: true
-  - name: alberto
-    value: 35.212.226.179.nip.io
-    proxy: true
-  - name: betterlist
-    value: a7532499-c7f0-4d84-b45a-7ba31e385693.id.repl.co
-    proxy: true
-  - name: albinpraveen
-    value: albinpraveen.vercel.app
-    proxy: false
-  - name: darkvibesrecords
-    value: 4bf630a3-445a-4ce1-8935-e1e2b2a86a91.id.repl.co
-    proxy: true
+# Load NS DB Yaml file
+with open('misc\dbns.yml') as file:
+    ns_db_data = yaml.safe_load(file)
 
-# NS records are used to specify the authoritative name servers for the zone.
-# If you are unsure what NS records do, we recommend using CNAME records instead.
-# Please add your custom domain in this zone.
-NS records:
-  - name: test
-    value: ns1.test.org
-    ttl: "14400"
-  - name: test
-    value: ns2.test.org
-    ttl: "14400"
-  - name: test
-    value: ns3.test.org
-    ttl: "14400"
-  - name: test
-    value: ns4.test.org
-    ttl: "14400"
-  - name: sebastian
-    value: ns0.1984.is
-    ttl: "86400"
-  - name: sebastian
-    value: ns1.1984hosting.com
-    ttl: "86400"
-  - name: sebastian
-    value: ns1.1984.is
-    ttl: "86400"
-  - name: sebastian
-    value: ns2.1984hosting.com
-    ttl: "86400"
-  - name: sebastian
-    value: ns2.1984.is
-    ttl: "86400"
-  - name: wtf
-    value: dns1.p01.nsone.net
-    ttl: "3600"
-  - name: wtf
-    value: dns2.p01.nsone.net
-    ttl: "3600"
-  - name: wtf
-    value: dns3.p01.nsone.net
-    ttl: "3600"
-  - name: wtf
-    value: dns4.p01.nsone.net
+# Load Subdomain YAML file
+with open('subdomain.yml') as file:
+    yaml_data = yaml.safe_load(file)
 
-# The following domain names are reserved and should not be modified.
-Reserved records:
-  - name: www
-  - name: ioday
-  - name: api
-  - name: io-today
-  - name: logo
-  - name: io.todaday
-  - name: io.day
-  - name: io-day
+# Get CNAME and NS records from YAML
+cname_records = yaml_data.get('CNAME records', [])
+ns_records = yaml_data.get('NS records', [])
+
+# Set up Cloudflare API client
+cf = CloudFlare.CloudFlare(email='', token=api_key)
+
+# Loop through CNAME records and update or create them
+for record in cname_records:
+    record_type = record.get('type', 'CNAME')
+    name = record['name']
+    value = record['value']
+    proxy = record.get('proxy', False)
+
+    # Check if the record is reserved
+    is_reserved = False
+    for reserved_record in yaml_data['Reserved records']:
+        if name == reserved_record['name']:
+            print(f"{name} is a reserved name and cannot be modified")
+            is_reserved = True
+            break
+
+    if is_reserved:
+        continue
+
+    # Check if the record already exists in the DB
+    existing_record = None
+    for record in cname_db_data.get(record_type + ' records', []):
+        if name == record['name']:
+            existing_record = record
+            break
+
+    # If the record already exists, skip it
+    if existing_record:
+        print(f"{name} already exists in the DNS records")
+        continue
+
+    # Otherwise, create the new record
+    cf.zones.dns_records.post(zone_id, data={
+        'type': record_type, 'name': name, 'content': value, 'proxied': proxy})
+
+    # Add the new record to the DB
+    cname_db_data.setdefault(record_type + ' records', []
+                             ).append({'name': name, 'value': value})
+
+    with open('misc\cnamedb.yml', 'w') as file:
+        yaml.dump(cname_db_data, file)
+
+    print(f"record {name} created successfully")
+
+
+# Loop through NS records and update or create them
+for record in ns_records:
+    record_type = record.get('type', 'NS')
+    name = record['name']
+    value = record['value']
+    ttl = record.get('ttl', 14400)
+    data = {'type': record_type, 'name': name, 'content': value, 'ttl': ttl}
+
+    # Check if the record is reserved
+    is_reserved = False
+    for reserved_record in yaml_data['Reserved records']:
+        if name == reserved_record['name']:
+            print(f"{name} is a reserved name and cannot be modified")
+            is_reserved = True
+            break
+
+    if is_reserved:
+        continue
+
+    # Check if the record already exists in the DB
+    existing_record = None
+    for record in ns_db_data.get(record_type + ' records', []):
+        if name == record['name'] and value == record['value']:
+            existing_record = record
+            break
+
+    # If the record already exists, skip it
+    if existing_record:
+        print(f"{name} already exists in the DNS records")
+        continue
+
+    # Otherwise, create the new record
+    cf.zones.dns_records.post(zone_id, data=data)
+
+    # Add the new record to the DB
+    ns_db_data.setdefault(record_type + ' records', []
+                          ).append({'name': name, 'value': value})
+
+    with open('misc\dbns.yml', 'w') as file:
+        yaml.dump(ns_db_data, file)
+
+    print(f"Record {name} created successfully")
