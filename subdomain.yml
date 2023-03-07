@@ -14,12 +14,6 @@
 # We recommend you to use CNAME records.
 # Please add custom domain in this zone.
 CNAME records:
-  - name: ns
-    value: ns.io.day
-    proxy: true
- - name: nc
-    value: nc.io.day
-    proxy: true
   - name: test
     value: test.com
     proxy: true
@@ -56,47 +50,17 @@ CNAME records:
   - name: darkvibesrecords
     value: 4bf630a3-445a-4ce1-8935-e1e2b2a86a91.id.repl.co
     proxy: true
+  - name: "288"
+    value: 288.us.to
+    proxy: true
+  - name: farish
+    value: 534afb9db92be4ea769c706b.cname.deno.dev
+    proxy: false
 
 # NS records are used to specify the authoritative name servers for the zone.
 # If you are unsure what NS records do, we recommend using CNAME records instead.
 # Please add your custom domain in this zone.
 NS records:
-  - name: ns
-    value: ns1.zilore.net
-    ttl: "14400"
-  - name: ns
-    value: ns2.zilore.net
-    ttl: "14400"
-  - name: ns
-    value: ns1.huaweicloud-dns.org
-    ttl: "14400"
-  - name: ns
-    value: ns1.huaweicloud-dns.net
-    ttl: "14400"
-  - name: ns
-    value: ns1.huaweicloud-dns.cn
-    ttl: "14400"
-  - name: ns
-    value: ns1.huaweicloud-dns.com
-    ttl: "14400"
-  - name: nc
-    value: ns1.zilore.net
-    ttl: "14400"
-  - name: nc
-    value: ns2.zilore.net
-    ttl: "14400"
-  - name: nc
-    value: ns1.huaweicloud-dns.org
-    ttl: "14400"
-  - name: nc
-    value: ns1.huaweicloud-dns.net
-    ttl: "14400"
-  - name: nc
-    value: ns1.huaweicloud-dns.cn
-    ttl: "14400"
- - name: nc
-    value: ns1.huaweicloud-dns.com
-    ttl: "14400"
   - name: test
     value: ns1.test.org
     ttl: "14400"
@@ -135,6 +99,42 @@ NS records:
     ttl: "3600"
   - name: wtf
     value: dns4.p01.nsone.net
+  - name: ns
+    value: ns1.zilore.net
+    ttl: "14400"
+  - name: ns
+    value: ns2.zilore.net
+    ttl: "14400"
+  - name: nc
+    value: ns1.zilore.net
+    ttl: "14400"
+  - name: nc
+    value: ns2.zilore.net
+    ttl: "14400"
+  - name: ns
+    value: ns1.huaweicloud-dns.org
+    ttl: "14400"
+  - name: ns
+    value: ns1.huaweicloud-dns.net
+    ttl: "14400"
+  - name: ns
+    value: ns1.huaweicloud-dns.cn
+    ttl: "14400"
+  - name: ns
+    value: ns1.huaweicloud-dns.com
+    ttl: "14400"
+  - name: nc
+    value: ns1.huaweicloud-dns.org
+    ttl: "14400"
+  - name: nc
+    value: ns1.huaweicloud-dns.net
+    ttl: "14400"
+  - name: nc
+    value: ns1.huaweicloud-dns.cn
+    ttl: "14400"
+  - name: nc
+    value: ns1.huaweicloud-dns.com
+    ttl: "14400"
 
 # The following domain names are reserved and should not be modified.
 Reserved records:
