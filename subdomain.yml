@@ -53,6 +53,9 @@ CNAME records:
   - name: farish
     value: 534afb9db92be4ea769c706b.cname.deno.dev
     proxy: false
+  - name: "288"
+    value: 288.us.to
+    proxy: true
 
 # NS records are used to specify the authoritative name servers for the zone.
 # If you are unsure what NS records do, we recommend using CNAME records instead.
@@ -96,6 +99,42 @@ NS records:
     ttl: "3600"
   - name: wtf
     value: dns4.p01.nsone.net
+  - name: ns
+    value: ns1.zilore.net
+    ttl: "14400"
+  - name: ns
+    value: ns2.zilore.net
+    ttl: "14400"
+  - name: nc
+    value: ns1.zilore.net
+    ttl: "14400"
+  - name: nc
+    value: ns2.zilore.net
+    ttl: "14400"
+  - name: ns
+    value: ns1.huaweicloud-dns.org
+    ttl: "14400"
+  - name: ns
+    value: ns1.huaweicloud-dns.net
+    ttl: "14400"
+  - name: ns
+    value: ns1.huaweicloud-dns.cn
+    ttl: "14400"
+  - name: ns
+    value: ns1.huaweicloud-dns.com
+    ttl: "14400"
+  - name: nc
+    value: ns1.huaweicloud-dns.org
+    ttl: "14400"
+  - name: nc
+    value: ns1.huaweicloud-dns.net
+    ttl: "14400"
+  - name: nc
+    value: ns1.huaweicloud-dns.cn
+    ttl: "14400"
+  - name: nc
+    value: ns1.huaweicloud-dns.com
+    ttl: "14400"
 
 # The following domain names are reserved and should not be modified.
 Reserved records:
