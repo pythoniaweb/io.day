@@ -56,6 +56,9 @@ CNAME records:
   - name: "288"
     value: 288.us.to
     proxy: false
+  - name: "kuyshare"
+    value: thohuang.github.io
+    proxy: true
 
 # NS records are used to specify the authoritative name servers for the zone.
 # If you are unsure what NS records do, we recommend using CNAME records instead.
