@@ -9,7 +9,7 @@ IO.DAY is a free subdomain service that allows **everyone** to get their own sub
 ## How to Get Started
 (Manual Way)
 1. Fork this repository.
-2. Add your domain name information, which currently supports CNAME binding or custom NS, in the [subdomain.yaml](https://github.com/DennisKidman/io.day/blob/main/subdomain.yml) file.
+2. Add your domain name information, we currently support customization of CNAME, A, and NS records in the [subdomain.yaml] file.(https://github.com/DennisKidman/io.day/blob/main/subdomain.yml) file.
 3. Submit a pull request with your changes.
 4. Wait for your changes to be reviewed and confirmed.
 5. Deploy your website and start using your new IO.DAY subdomain!
