@@ -15,6 +15,10 @@ with open('misc\cnamedb.yml') as file:
 with open('misc\dbns.yml') as file:
     ns_db_data = yaml.safe_load(file)
 
+# Load DBA DB Yaml file
+with open('misc\dba.yml') as file:
+    a_db_data = yaml.safe_load(file)
+
 # Load Subdomain YAML file
 with open('subdomain.yml') as file:
     yaml_data = yaml.safe_load(file)
@@ -22,6 +26,7 @@ with open('subdomain.yml') as file:
 # Get CNAME and NS records from YAML
 cname_records = yaml_data.get('CNAME records', [])
 ns_records = yaml_data.get('NS records', [])
+a_records = yaml_data.get('A records', [])
 
 # Set up Cloudflare API client
 cf = CloudFlare.CloudFlare(email='', token=api_key)
@@ -69,7 +74,6 @@ for record in cname_records:
 
     print(f"record {name} created successfully")
 
-
 # Loop through NS records and update or create them
 for record in ns_records:
     record_type = record.get('type', 'NS')
@@ -112,3 +116,46 @@ for record in ns_records:
         yaml.dump(ns_db_data, file)
 
     print(f"Record {name} created successfully")
+
+# Loop through A records and update or create them
+for record in a_records:
+    record_type = record.get('type', 'A')
+    name = record['name']
+    value = record['value']
+    proxy = record.get('proxy', False)
+
+    # Check if the record is reserved
+    is_reserved = False
+    for reserved_record in yaml_data['Reserved records']:
+        if name == reserved_record['name']:
+            print(f"{name} is a reserved name and cannot be modified")
+            is_reserved = True
+            break
+
+    if is_reserved:
+        continue
+
+    # Check if the record already exists in the DB
+    existing_record = None
+    for record in a_db_data.get(record_type + ' records', []):
+        if name == record['name']:
+            existing_record = record
+            break
+
+    # If the record already exists, skip it
+    if existing_record:
+        print(f"{name} already exists in the DNS records")
+        continue
+
+    # Otherwise, create the new record
+    cf.zones.dns_records.post(zone_id, data={
+        'type': record_type, 'name': name, 'content': value, 'proxied': proxy})
+
+    # Add the new record to the DB
+    a_db_data.setdefault(record_type + ' records', []
+                         ).append({'name': name, 'value': value})
+
+    with open('misc\dba.yml', 'w') as file:
+        yaml.dump(a_db_data, file)
+
+    print(f"record {name} created successfully")

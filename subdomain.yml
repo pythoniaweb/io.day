@@ -53,9 +53,9 @@ CNAME records:
   - name: farish
     value: 534afb9db92be4ea769c706b.cname.deno.dev
     proxy: false
-  - name: "288"
-    value: 288.us.to
-    proxy: false
+  - name: sinacode
+    value: sinacode.gw.to
+    proxy: true
   - name: "kuyshare"
     value: thohuang.github.io
     proxy: true
@@ -138,6 +138,15 @@ NS records:
   - name: nc
     value: ns1.huaweicloud-dns.com
     ttl: "14400"
+
+# Records of type A are exclusively utilized for IPv4.
+A records:
+  - name: test
+    value: "192.0.1.23"
+    proxy: true
+  - name: "288"
+    value: "129.153.45.189"
+    proxy: false
 
 # The following domain names are reserved and should not be modified.
 Reserved records:
