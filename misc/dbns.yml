@@ -49,3 +49,11 @@ NS records:
   value: ns1.huaweicloud-dns.cn
 - name: nc
   value: ns1.huaweicloud-dns.com
+- name: 'null'
+  value: ns1.byet.org
+- name: 'null'
+  value: ns2.byet.org
+- name: 'null'
+  value: ns3.byet.org
+- name: 'null'
+  value: ns4.byet.org
