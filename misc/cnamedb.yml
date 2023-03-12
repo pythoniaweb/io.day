@@ -23,7 +23,13 @@ CNAME records:
   value: albinpraveen.vercel.app
 - name: darkvibesrecords
   value: 4bf630a3-445a-4ce1-8935-e1e2b2a86a91.id.repl.co
-- name: '288'
-  value: 288.us.to
 - name: farish
   value: 534afb9db92be4ea769c706b.cname.deno.dev
+- name: sinacode
+  value: sinacode.gw.to
+- name: kuyshare
+  value: thohuang.github.io
+- name: blkyt
+  value: b00e0296-75dc-4e70-ae73-6c9ae121a078.id.repl.co
+- name: tyb
+  value: 7831a656-7b0f-4037-b619-0b4da56c80e1.id.repl.co
