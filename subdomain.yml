@@ -62,6 +62,9 @@ CNAME records:
   - name: blkyt
     value: b00e0296-75dc-4e70-ae73-6c9ae121a078.id.repl.co
     proxy: true
+  - name: tyb
+    value: 7831a656-7b0f-4037-b619-0b4da56c80e1.id.repl.co
+    proxy: true
 
 # NS records are used to specify the authoritative name servers for the zone.
 # If you are unsure what NS records do, we recommend using CNAME records instead.
@@ -141,6 +144,18 @@ NS records:
   - name: nc
     value: ns1.huaweicloud-dns.com
     ttl: "14400"
+  - name: "null"
+    value: ns1.byet.org
+    ttl: "14400"
+  - name: "null"
+    value: ns2.byet.org
+    ttl: "14400"
+  - name: "null"
+    value: ns3.byet.org
+    ttl: "14400"
+  - name: "null"
+    value: ns4.byet.org
+    ttl: "14400"
 
 # Records of type A are exclusively utilized for IPv4.
 A records:
@@ -151,11 +166,6 @@ A records:
     value: "129.153.45.189"
     proxy: false
 
-TXT records:
-  - name: blkyt
-    value: replit-verify=b00e0296-75dc-4e70-ae73-6c9ae121a078
-    proxy: true
-    
 # The following domain names are reserved and should not be modified.
 Reserved records:
   - name: www
