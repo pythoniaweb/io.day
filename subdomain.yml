@@ -59,6 +59,9 @@ CNAME records:
   - name: "kuyshare"
     value: thohuang.github.io
     proxy: true
+  - name: tyb
+    value: 7831a656-7b0f-4037-b619-0b4da56c80e1.id.repl.co
+    proxy: true
 
 # NS records are used to specify the authoritative name servers for the zone.
 # If you are unsure what NS records do, we recommend using CNAME records instead.
@@ -138,6 +141,11 @@ NS records:
   - name: nc
     value: ns1.huaweicloud-dns.com
     ttl: "14400"
+
+TXT records:
+  - name: tyb
+    value: replit-verify=7831a656-7b0f-4037-b619-0b4da56c80e1
+    proxy: true
 
 # Records of type A are exclusively utilized for IPv4.
 A records:
