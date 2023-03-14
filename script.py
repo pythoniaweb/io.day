@@ -1,161 +1,78 @@
 import CloudFlare
 import yaml
 
+# Helper functions
+def load_yaml(file_path):
+    with open(file_path) as file:
+        return yaml.safe_load(file)
+
+def is_reserved_record(name, reserved_records):
+    for record in reserved_records:
+        if name == record['name']:
+            return True
+    return False
+
 # Load API Key from ky.yml
-with open('misc\ky.yml') as file:
-    api_data = yaml.safe_load(file)
-    api_key = api_data['api_key']
-    zone_id = api_data['zone_id']
+api_data = load_yaml('misc/ky.yml')
+api_key = api_data['api_key']
+zone_id = api_data['zone_id']
 
-# Load CNAME DB Yaml file
-with open('misc\cnamedb.yml') as file:
-    cname_db_data = yaml.safe_load(file)
+# Load subdomain YAML file
+yaml_data = load_yaml('subdomain.yml')
 
-# Load NS DB Yaml file
-with open('misc\dbns.yml') as file:
-    ns_db_data = yaml.safe_load(file)
+# Get CNAME, NS, and A records from YAML
+records = {
+    'CNAME': yaml_data.get('CNAME records', []),
+    'NS': yaml_data.get('NS records', []),
+    'A': yaml_data.get('A records', [])
+}
 
-# Load DBA DB Yaml file
-with open('misc\dba.yml') as file:
-    a_db_data = yaml.safe_load(file)
-
-# Load Subdomain YAML file
-with open('subdomain.yml') as file:
-    yaml_data = yaml.safe_load(file)
-
-# Get CNAME and NS records from YAML
-cname_records = yaml_data.get('CNAME records', [])
-ns_records = yaml_data.get('NS records', [])
-a_records = yaml_data.get('A records', [])
+# Load record databases
+record_dbs = {
+    'CNAME': load_yaml('misc/cnamedb.yml'),
+    'NS': load_yaml('misc/dbns.yml'),
+    'A': load_yaml('misc/dba.yml')
+}
 
 # Set up Cloudflare API client
 cf = CloudFlare.CloudFlare(email='', token=api_key)
 
-# Loop through CNAME records and update or create them
-for record in cname_records:
-    record_type = record.get('type', 'CNAME')
-    name = record['name']
-    value = record['value']
-    proxy = record.get('proxy', False)
+# Loop through records and update or create them
+for record_type, record_list in records.items():
+    for record in record_list:
+        name = record['name']
+        value = record['value']
+        ttl = record.get('ttl', 14400)
+        proxy = record.get('proxy', False)
 
-    # Check if the record is reserved
-    is_reserved = False
-    for reserved_record in yaml_data['Reserved records']:
-        if name == reserved_record['name']:
+        # Check if the record is reserved
+        if is_reserved_record(name, yaml_data.get('Reserved records', [])):
             print(f"{name} is a reserved name and cannot be modified")
-            is_reserved = True
-            break
+            continue
 
-    if is_reserved:
-        continue
+        # Check if the record already exists in the DB
+        existing_record = None
+        for record in record_dbs.get(record_type + ' records', []):
+            if name == record['name'] and value == record['value']:
+                existing_record = record
+                break
 
-    # Check if the record already exists in the DB
-    existing_record = None
-    for record in cname_db_data.get(record_type + ' records', []):
-        if name == record['name']:
-            existing_record = record
-            break
+        # If the record already exists, skip it
+        if existing_record:
+            print(f"{name} already exists in the DNS records")
+            continue
 
-    # If the record already exists, skip it
-    if existing_record:
-        print(f"{name} already exists in the DNS records")
-        continue
+        # Otherwise, create the new record
+        try:
+            cf.zones.dns_records.post(zone_id, data={
+                'type': record_type, 'name': name, 'content': value, 'ttl': ttl, 'proxied': proxy})
+        except CloudFlare.exceptions.CloudFlareAPIError as e:
+            print(f"Error creating record {name}: {e}")
+            continue
 
-    # Otherwise, create the new record
-    cf.zones.dns_records.post(zone_id, data={
-        'type': record_type, 'name': name, 'content': value, 'proxied': proxy})
+        # Add the new record to the DB
+        record_dbs.setdefault(record_type + ' records', []).append({'name': name, 'value': value})
+        with open(f'misc/db{record_type.lower()}.yml', 'w') as file:
+            yaml.dump(record_dbs, file)
 
-    # Add the new record to the DB
-    cname_db_data.setdefault(record_type + ' records', []
-                             ).append({'name': name, 'value': value})
-
-    with open('misc\cnamedb.yml', 'w') as file:
-        yaml.dump(cname_db_data, file)
-
-    print(f"record {name} created successfully")
-
-# Loop through NS records and update or create them
-for record in ns_records:
-    record_type = record.get('type', 'NS')
-    name = record['name']
-    value = record['value']
-    ttl = record.get('ttl', 14400)
-    data = {'type': record_type, 'name': name, 'content': value, 'ttl': ttl}
-
-    # Check if the record is reserved
-    is_reserved = False
-    for reserved_record in yaml_data['Reserved records']:
-        if name == reserved_record['name']:
-            print(f"{name} is a reserved name and cannot be modified")
-            is_reserved = True
-            break
-
-    if is_reserved:
-        continue
-
-    # Check if the record already exists in the DB
-    existing_record = None
-    for record in ns_db_data.get(record_type + ' records', []):
-        if name == record['name'] and value == record['value']:
-            existing_record = record
-            break
-
-    # If the record already exists, skip it
-    if existing_record:
-        print(f"{name} already exists in the DNS records")
-        continue
-
-    # Otherwise, create the new record
-    cf.zones.dns_records.post(zone_id, data=data)
-
-    # Add the new record to the DB
-    ns_db_data.setdefault(record_type + ' records', []
-                          ).append({'name': name, 'value': value})
-
-    with open('misc\dbns.yml', 'w') as file:
-        yaml.dump(ns_db_data, file)
-
-    print(f"Record {name} created successfully")
-
-# Loop through A records and update or create them
-for record in a_records:
-    record_type = record.get('type', 'A')
-    name = record['name']
-    value = record['value']
-    proxy = record.get('proxy', False)
-
-    # Check if the record is reserved
-    is_reserved = False
-    for reserved_record in yaml_data['Reserved records']:
-        if name == reserved_record['name']:
-            print(f"{name} is a reserved name and cannot be modified")
-            is_reserved = True
-            break
-
-    if is_reserved:
-        continue
-
-    # Check if the record already exists in the DB
-    existing_record = None
-    for record in a_db_data.get(record_type + ' records', []):
-        if name == record['name']:
-            existing_record = record
-            break
-
-    # If the record already exists, skip it
-    if existing_record:
-        print(f"{name} already exists in the DNS records")
-        continue
-
-    # Otherwise, create the new record
-    cf.zones.dns_records.post(zone_id, data={
-        'type': record_type, 'name': name, 'content': value, 'proxied': proxy})
-
-    # Add the new record to the DB
-    a_db_data.setdefault(record_type + ' records', []
-                         ).append({'name': name, 'value': value})
-
-    with open('misc\dba.yml', 'w') as file:
-        yaml.dump(a_db_data, file)
-
-    print(f"record {name} created successfully")
+        print(f"Record {name} created successfully")
