@@ -161,7 +161,7 @@ NS records:
     ttl: "14400"
   - name: ltd
     value: henrik.ns.cloudflare.com
-    ttl: "14400"
+    ttl: "14400" 
 
 # Records of type A are exclusively utilized for IPv4.
 A records:
