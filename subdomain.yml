@@ -187,6 +187,19 @@ NS records:
   - name: ltd
     value: NS4.AFRAID.ORG
     ttl: "14400" 
+    
+  - name: bio
+    value: NS1.AFRAID.ORG
+    ttl: "3600"
+  - name: bio
+    value: NS2.AFRAID.ORG
+    ttl: "3600" 
+  - name: bio
+    value: NS3.AFRAID.ORG
+    ttl: "3600"
+  - name: bio
+    value: NS4.AFRAID.ORG
+    ttl: "3600" 
 
 
 # Records of type A are exclusively utilized for IPv4.
