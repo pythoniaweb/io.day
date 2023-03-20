@@ -62,6 +62,9 @@ CNAME records:
   - name: huto-comsci-test
     value: huto-comsci-test.netlify.app
     proxy: false
+  - name: anas
+    value: itzanasov.github.io
+    proxy: false
 
 # NS records are used to specify the authoritative name servers for the zone.
 # If you are unsure what NS records do, we recommend using CNAME records instead.
@@ -202,6 +205,24 @@ NS records:
   - name: bio
     value: NS4.AFRAID.ORG
     ttl: "3600" 
+  - name: rvpanel
+    value: NS1.AFRAID.ORG
+    ttl: "14400"
+  - name: rvpanel
+    value: NS2.AFRAID.ORG
+    ttl: "14400" 
+  - name: rvpanel
+    value: NS3.AFRAID.ORG
+    ttl: "14400"
+  - name: rvpanel
+    value: NS4.AFRAID.ORG
+    ttl: "14400" 
+  - name: biz
+    value: henrik.ns.cloudflare.com
+    ttl: "86400"
+  - name: biz
+    value: georgia.ns.cloudflare.com
+    ttl: "86400"
 
 
 # Records of type A are exclusively utilized for IPv4.
