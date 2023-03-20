@@ -223,6 +223,21 @@ NS records:
   - name: biz
     value: georgia.ns.cloudflare.com
     ttl: "86400"
+  - name: host
+    value: ns1.byet.org
+    ttl: "14400"
+  - name: host
+    value: ns2.byet.org
+    ttl: "14400"
+  - name: host
+    value: ns3.byet.org
+    ttl: "14400"
+  - name: host
+    value: ns4.byet.org
+    ttl: "14400"
+  - name: host
+    value: ns5.byet.org
+    ttl: "14400"
 
 
 # Records of type A are exclusively utilized for IPv4.
@@ -245,17 +260,20 @@ Reserved records:
   - name: www
   - name: ioday
   - name: api
+  - name: io-today
+  - name: logo
+  - name: io.todaday
+  - name: io.day
+  - name: io-day
   - name: home
   - name: bot
   - name: discord
   - name: github
   - name: ftp
   - name: sftp
-  - name: host
+  - name: cpanel
   - name: panel
   - name: client
-  - name: io-today
-  - name: logo
-  - name: io.todaday
-  - name: io.day
-  - name: io-day
+  - name: dns
+  - name: xxx
+  - name: cloud
