@@ -47,9 +47,6 @@ CNAME records:
   - name: darkvibesrecords
     value: 4bf630a3-445a-4ce1-8935-e1e2b2a86a91.id.repl.co
     proxy: true
-  - name: farish
-    value: 534afb9db92be4ea769c706b.cname.deno.dev
-    proxy: false
   - name: sinacode
     value: sinacode.gw.to
     proxy: true
@@ -64,6 +61,9 @@ CNAME records:
     proxy: true
   - name: huto-comsci-test
     value: huto-comsci-test.netlify.app
+    proxy: false
+  - name: anas
+    value: itzanasov.github.io
     proxy: false
 
 # NS records are used to specify the authoritative name servers for the zone.
@@ -187,7 +187,12 @@ NS records:
   - name: ltd
     value: NS4.AFRAID.ORG
     ttl: "14400" 
-    
+  - name: cloner
+    value: donna.ns.cloudflare.com
+    ttl: "86400"
+  - name: cloner
+    value: ken.ns.cloudflare.com
+    ttl: "86400"
   - name: bio
     value: NS1.AFRAID.ORG
     ttl: "3600"
@@ -200,6 +205,24 @@ NS records:
   - name: bio
     value: NS4.AFRAID.ORG
     ttl: "3600" 
+  - name: rvpanel
+    value: NS1.AFRAID.ORG
+    ttl: "14400"
+  - name: rvpanel
+    value: NS2.AFRAID.ORG
+    ttl: "14400" 
+  - name: rvpanel
+    value: NS3.AFRAID.ORG
+    ttl: "14400"
+  - name: rvpanel
+    value: NS4.AFRAID.ORG
+    ttl: "14400" 
+  - name: biz
+    value: henrik.ns.cloudflare.com
+    ttl: "86400"
+  - name: biz
+    value: georgia.ns.cloudflare.com
+    ttl: "86400"
 
 
 # Records of type A are exclusively utilized for IPv4.
@@ -209,6 +232,9 @@ A records:
     proxy: true
   - name: "288"
     value: "129.153.45.189"
+    proxy: false
+  - name: farish
+    value: "76.223.55.44"
     proxy: false
 
 # The following domain names are reserved and should not be modified.
