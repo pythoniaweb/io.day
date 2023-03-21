@@ -262,3 +262,10 @@ Reserved records:
   - name: xxx
   - name: cloud
   - name: host
+  - name: foo
+  - name: google
+  - name: auth
+  - name: files
+  - name: yandex
+  - name: yahoo
+  - name: steam
