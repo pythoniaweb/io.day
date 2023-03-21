@@ -240,6 +240,10 @@ A records:
     proxy: false
 
 # The following domain names are reserved and should not be modified.
+# This domains are reserved due security reasons.
+# Some of this domains for example foo.io.day or www.io.day will be used in future.
+# Changing this section will result in auto decline of your domain request.
+# Best regards io.day abuse response department 
 Reserved records:
   - name: www
   - name: ioday
