@@ -277,3 +277,25 @@ Reserved records:
   - name: dns
   - name: xxx
   - name: cloud
+  - name: drive
+  - name: cname
+  - name: a
+  - name: aaaa
+  - name: nitro
+  - name: github-pro
+  - name: pro
+  - name: free
+  - name: area
+  - name: army
+  - name: ns
+  - name: ns1
+  - name: ns2
+  - name: ns3
+  - name: ns4
+  - name: ns5
+  - name: ns6
+  - name: support
+  - name: contact
+  - name: abuse
+  - name: response
+  - name: emergency
