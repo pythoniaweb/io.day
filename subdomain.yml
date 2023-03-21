@@ -223,21 +223,6 @@ NS records:
   - name: biz
     value: georgia.ns.cloudflare.com
     ttl: "86400"
-  - name: host
-    value: ns1.byet.org
-    ttl: "14400"
-  - name: host
-    value: ns2.byet.org
-    ttl: "14400"
-  - name: host
-    value: ns3.byet.org
-    ttl: "14400"
-  - name: host
-    value: ns4.byet.org
-    ttl: "14400"
-  - name: host
-    value: ns5.byet.org
-    ttl: "14400"
 
 
 # Records of type A are exclusively utilized for IPv4.
@@ -299,3 +284,4 @@ Reserved records:
   - name: abuse
   - name: response
   - name: emergency
+  - name: host
